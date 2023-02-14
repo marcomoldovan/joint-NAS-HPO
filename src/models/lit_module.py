@@ -6,7 +6,7 @@ from torchmetrics import MaxMetric, MeanMetric
 from torchmetrics.classification.accuracy import Accuracy
 
 
-class MNISTLitModule(LightningModule):
+class FashionMNISTLitModule(LightningModule):
     """Example of LightningModule for MNIST classification.
 
     A LightningModule organizes your PyTorch code into 6 sections:
@@ -34,6 +34,10 @@ class MNISTLitModule(LightningModule):
         self.save_hyperparameters(logger=False)
 
         self.net = net
+        
+        # optimizer and scheduler
+        self.optimizer = optimizer
+        self.scheduler = scheduler
 
         # loss function
         self.criterion = torch.nn.CrossEntropyLoss()
@@ -131,9 +135,9 @@ class MNISTLitModule(LightningModule):
         Examples:
             https://pytorch-lightning.readthedocs.io/en/latest/common/lightning_module.html#configure-optimizers
         """
-        optimizer = self.hparams.optimizer(params=self.parameters())
-        if self.hparams.scheduler is not None:
-            scheduler = self.hparams.scheduler(optimizer=optimizer)
+        optimizer = self.optimizer(params=self.parameters())
+        if self.scheduler is not None:
+            scheduler = self.scheduler(optimizer=optimizer)
             return {
                 "optimizer": optimizer,
                 "lr_scheduler": {
@@ -147,4 +151,4 @@ class MNISTLitModule(LightningModule):
 
 
 if __name__ == "__main__":
-    _ = MNISTLitModule(None, None, None)
+    _ = FashionMNISTLitModule(None, None, None)

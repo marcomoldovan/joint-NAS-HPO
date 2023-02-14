@@ -4,8 +4,8 @@
 # python train.py experiment=example
 
 defaults:
-  - override /data: mnist.yaml
-  - override /model: mnist.yaml
+  - override /data: fashion_mnist.yaml
+  - override /model: cnn.yaml
   - override /callbacks: default.yaml
   - override /trainer: default.yaml
 
@@ -20,17 +20,17 @@ trainer:
   min_epochs: 10
   max_epochs: 10
   gradient_clip_val: 0.5
+  accelerator: gpu
+  gpus: 1
 
 model:
   optimizer:
-    lr: 0.002
-  net:
-    lin1_size: 128
-    lin2_size: 256
-    lin3_size: 64
+    lr: 0.01
+  scheduler: Null
 
 data:
   batch_size: 64
+  num_workers: 0
 
 logger:
   wandb:

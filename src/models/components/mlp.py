@@ -1,7 +1,7 @@
 from torch import nn
 
 
-class SimpleDenseNet(nn.Module):
+class MLP(nn.Module):
     def __init__(
         self,
         input_size: int = 784,
@@ -35,4 +35,4 @@ class SimpleDenseNet(nn.Module):
 
 
 if __name__ == "__main__":
-    _ = SimpleDenseNet()
+    _ = MLP()
