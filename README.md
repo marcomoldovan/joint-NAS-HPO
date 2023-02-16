@@ -20,24 +20,25 @@ fashion classification1 dataset. Instead of only considering the architecture an
 seperately you should build a system to jointly optimize them.
 You are allowed a maximum runtime of 6 hours. We have provided a standard vision model
 as a baseline. In the end, you should convince us that you indeed improved the performance of the
-network when compared to the default approach.To this end, you could consider one or several
+network when compared to the default approach. To this end, you could consider one or several
 of the following:
-• (must) Apply HPO to obtain a well-performing hyperparameter configuration (e.g., BO or
-EAs);
-• (must) Apply NAS (e.g., BOHB or DARTS) to improve the architecture of the network;
-• (can) Extend the configuration space to cover preprocessing, data augmentation and regularization;
-• (can) Apply one or several of the speedup techniques for HPO/NAS;
-• (can) Apply meta-learning, such as algorithm selection or warmstarting, to improve the
-performance;
-• (can) Apply a learning to learn approach to learn how to optimize the network;
-• (can) Determine the importance of the algorithm’s hyperparameters;
+
+- (must) Apply HPO to obtain a well-performing hyperparameter configuration (e.g., BO or EAs);
+- (must) Apply NAS (e.g., BOHB or DARTS) to improve the architecture of the network;
+- (can) Extend the configuration space to cover preprocessing, data augmentation and regularization;
+- (can) Apply one or several of the speedup techniques for HPO/NAS;
+- (can) Apply meta-learning, such as algorithm selection or warmstarting, to improve the performance;
+- (can) Apply a learning to learn approach to learn how to optimize the network;
+- (can) Determine the importance of the algorithm’s hyperparameters; 
+
 From the optional approaches (denoted by can), pick the ones that you think are most appropriate.
 To evaluate your approach please choose the way you evaluate well; you could consider the
 following:
-• Measure and compare against the default performance of the given network;
-• Plot a confusion matrix;
-• Plot the performance of your AutoML approach over time;
-• Apply a statistical test;
+
+- Measure and compare against the default performance of the given network;
+- Plot a confusion matrix;
+- Plot the performance of your AutoML approach over time;
+- Apply a statistical test;
 
 ### Experimental Constrains
 
@@ -58,11 +59,24 @@ Install dependencies
 
 ```bash
 # clone project
-git clone https://github.com/YourGithubName/your-repo-name
-cd your-repo-name
+git clone https://github.com/marcomoldovan/cross-modal-speech-segment-retrieval
+cd cross-modal-speech-segment-retrieval
 
-# [OPTIONAL] create conda environment
-conda create -n myenv python=3.9
+# install the correct python version
+sudo apt-get install python3.10 # Linux, Python 3.7 or higher
+brew install python@3.10 #MacOS, Python 3.7 or higher
+choco install python --version=3.9 # Windows, Python 3.7-3.9
+
+# create python virtual environment and activate it
+python3 -m venv myenv
+source myenv/bin/activate
+
+# if you have several version of python you can create a virtual environment with a specific version:
+virtualenv --python=/usr/bin/<python3.x> myenv
+myenv\Scripts\activate.bat
+
+# [ALTERNATIVE] create conda environment
+conda create -n myenv python=<3.x>
 conda activate myenv
 
 # install pytorch according to instructions
@@ -71,6 +85,7 @@ conda activate myenv
 # install requirements
 pip install -r requirements.txt
 ```
+#### Default training
 
 Train model with default configuration
 
@@ -93,3 +108,21 @@ You can override any parameter from command line like this
 ```bash
 python src/train.py trainer.max_epochs=20 data.batch_size=64
 ```
+
+#### Hyperparameter search
+
+To run a hyperparameter search with [Optuna](https://optuna.org/) you can use the following command
+
+```bash
+python train.py -m hparams_search=fashion_mnist_optuna experiment=example
+```
+
+Running a hyperparameter sweep with [Weights and Biases](https://wandb.ai/site) is also supported.
+
+```bash
+wandb sweep configs/hparams_search/fashion_mnist_wandb.yaml
+wandb agent <sweep_id>
+```
+
+**Note #1:** [configs/logger/wandb.yaml](configs/logger/wandb.yaml) contain my personal project and entitiy names. You can change them to your own to ensure proper logging.
+**Note #2:** When running a wandb sweep on Windows you need to set the correct python executable in [configs/hparams_search/fashion_mnist_wandb.yaml](configs/hparams_search/fashion_mnist_wandb.yaml)
