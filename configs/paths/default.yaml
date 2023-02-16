@@ -16,3 +16,6 @@ output_dir: ${hydra:runtime.output_dir}
 
 # path to working directory
 work_dir: ${hydra:runtime.cwd}
+
+# local path to correct venv - important for wandb sweep
+env: C:\Users\marco\.venv\auto-ml\Scripts\

@@ -1,7 +1,10 @@
+numpy
+matplotlib
 tqdm
 configspace
 scikit-learn
 smac #!
+seaborn
 
 # --------- pytorch --------- #
 torch>=1.10.0

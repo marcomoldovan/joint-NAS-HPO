@@ -6,13 +6,14 @@
 defaults:
   - override /data: fashion_mnist.yaml
   - override /model: cnn.yaml
-  - override /callbacks: default.yaml
+  - override /callbacks: 
+    - wandb.yaml
   - override /trainer: default.yaml
 
 # all parameters below will be merged with parameters from default configurations set above
 # this allows you to overwrite only specified parameters
 
-tags: ["fashion-mnist", "simple_dense_net"]
+tags: ["fashion-mnist", "simple_conv_net"]
 
 seed: 12345
 
@@ -28,13 +29,14 @@ model:
     lr: 0.01
   scheduler: Null
   net:
-    fc_channels: [10]
+    fc_channels: [32, 10]
 
 data:
-  batch_size: 64
+  batch_size: 128
   num_workers: 0
 
 logger:
   wandb:
     tags: ${tags}
     group: "fasion-mnist"
+    offline: False
