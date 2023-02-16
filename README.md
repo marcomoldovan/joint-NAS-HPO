@@ -124,5 +124,5 @@ wandb sweep configs/hparams_search/fashion_mnist_wandb.yaml
 wandb agent <sweep_id>
 ```
 
-**Note #1:** [configs/logger/wandb.yaml](configs/logger/wandb.yaml) contain my personal project and entitiy names. You can change them to your own to ensure proper logging.
-**Note #2:** When running a wandb sweep on Windows you need to set the correct python executable in [configs/hparams_search/fashion_mnist_wandb.yaml](configs/hparams_search/fashion_mnist_wandb.yaml)
+- **Note #1:** [configs/logger/wandb.yaml](configs/logger/wandb.yaml) contain my personal project and entitiy names. You can change them to your own to ensure proper logging.
+- **Note #2:** When running a wandb sweep on Windows you need to set the correct python executable in [configs/hparams_search/fashion_mnist_wandb.yaml](configs/hparams_search/fashion_mnist_wandb.yaml)
